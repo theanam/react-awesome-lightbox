@@ -136,7 +136,7 @@ export default class Lightbox extends React.Component {
             <div className="lb-container">
                 <div className="lb-header" style={{justifyContent: buttonAlign}}>
                     <Cond condition = {showTitle && title}>
-                        <div class="lb-title"
+                        <div className="lb-title"
                         style={{
                             display   : buttonAlign === "center"?"none":"flex",
                             order     : buttonAlign === "flex-start"?"1":"unset"
