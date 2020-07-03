@@ -1,6 +1,6 @@
 {
     "name": "react-awesome-lightbox",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "lightbox like image viewer for react with zoom, rotate. Single or multi image mode and touch support",
     "keywords": [
         "react",
@@ -57,7 +57,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git@github.com:theanam/react-imageviewer.git"
+        "url": "git@github.com:theanam/react-awesome-lightbox.git"
     },
     "dependencies": {}
 }
