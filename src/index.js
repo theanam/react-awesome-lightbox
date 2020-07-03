@@ -19,14 +19,14 @@ export default class ImageViewer extends React.Component {
     lastX  = 0;
     lastY  = 0;
     state = {
-        x : 0,
-        y : 0,
-        zoom : 1,
-        rotate: 0
+        x      : 0,
+        y      : 0,
+        zoom   : 1,
+        rotate : 0
     }
     createTransform = (x,y,zoom,rotate) => `translate3d(${x}px,${y}px,0px) scale(${zoom}) rotate(${rotate}deg)`;
-    stopSideEffect = (e) => e.stopPropagation();
-    preventDefault = (e)=> e.preventDefault();
+    stopSideEffect  = (e) => e.stopPropagation();
+    preventDefault  = (e)=> e.preventDefault();
     startMove = (e) => {
         if(this.state.zoom <= 1) return false;
         this.moving = true;
