@@ -38,12 +38,12 @@ export default class ImageViewer extends React.Component {
     stopSideEffect  = (e) => e.stopPropagation();
     preventDefault  = (e) => e.preventDefault();
     getCurrentImage = (s,p) => {
-        if(!s.multi) return p.image || "";
-        return p.images[s.current]?.url || p.images[s.current] || "";
+        if(!s.multi) return p.image ?? "";
+        return p.images[s.current]?.url ?? p.images?.[s.current] ?? "";
     }
     getCurrentTitle = (s,p)  => {
-        if(!s.multi) return p.title || "";
-        return p.images?.[s.current]?.title || "";
+        if(!s.multi) return p.title ?? "";
+        return p.images?.[s.current]?.title ?? "";
     }
     navigateImage = (direction) =>{
         let current = 0;
@@ -137,27 +137,26 @@ export default class ImageViewer extends React.Component {
                     <Cond condition = {showTitle && title}>
                         <div class="lb-title"
                         style={{
-                            display: buttonAlign === "center"?"none":"flex",
-                            order: buttonAlign === "flex-start"?"1":"unset",
-                            textAlign: buttonAlign === "flex-start"?"right":"left",
+                            display   : buttonAlign === "center"?"none":"flex",
+                            order     : buttonAlign === "flex-start"?"1":"unset"
                         }}>
-                            <span>{title}</span>
+                            <span style= {{textAlign : buttonAlign === "flex-start"?"right":"left"}}>{title}</span>
                         </div>  
                     </Cond>
                     <Cond condition = {this.state.multi}>
-                        <div className="lb-button prev" onClick={()=>this.navigateImage("prev")}></div>
-                        <div className="lb-button next" onClick={()=>this.navigateImage("next")}></div>
+                        <div title="Previous" className="lb-button prev" onClick={()=>this.navigateImage("prev")}></div>
+                        <div title="Next" className="lb-button next" onClick={()=>this.navigateImage("next")}></div>
                     </Cond>
                     <Cond condition = {allowZoom}>
-                        <div className="lb-button zoomin" onClick={()=>this.applyZoom("in")}></div>
-                        <div className="lb-button zoomout" onClick={()=>this.applyZoom("out")}></div>
+                        <div title="Zoom In" className="lb-button zoomin" onClick={()=>this.applyZoom("in")}></div>
+                        <div title="Zoom Out" className="lb-button zoomout" onClick={()=>this.applyZoom("out")}></div>
                     </Cond>
                     <Cond condition = {allowRotate}>
-                        <div className="lb-button rotatel" onClick={()=>this.applyRotate("acw")}></div>
-                        <div className="lb-button rotater" onClick={()=>this.applyRotate("cw")}></div>
+                        <div title="Rotate left" className="lb-button rotatel" onClick={()=>this.applyRotate("acw")}></div>
+                        <div title="Rotate right" className="lb-button rotater" onClick={()=>this.applyRotate("cw")}></div>
                     </Cond>
-                    {allowReset?<div className="lb-button reload" onClick={this.reset}></div>:null}
-                    <div className="lb-button close" style={{order: buttonAlign === "flex-start"?"-1":"unset"}} onClick={e=>this.exit(e)}></div>
+                    {allowReset?<div title="Reset" className="lb-button reload" onClick={this.reset}></div>:null}
+                    <div title="Close" className="lb-button close" style={{order: buttonAlign === "flex-start"?"-1":"unset"}} onClick={e=>this.exit(e)}></div>
                 </div>
                 <div 
                 className="lb-canvas"
