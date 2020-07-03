@@ -28,6 +28,7 @@ export default class ImageViewer extends React.Component {
     stopSideEffect = (e) => e.stopPropagation();
     preventDefault = (e)=> e.preventDefault();
     startMove = (e) => {
+        if(!this.state.zoom > 1) return false;
         this.moving = true;
         this.preventDefault(e);
         let xy = getXY(e);
@@ -56,7 +57,7 @@ export default class ImageViewer extends React.Component {
                 this.setState({zoom: this.state.zoom + zoomStep});
                 break;
             case "out":
-                this.setState({zoom: this.state.zoom - zoomStep});
+                if(this.state.zoom > 1) this.setState({zoom: this.state.zoom - zoomStep});
                 break;
             default:
                 console.error("Wrong function invocation");
@@ -91,7 +92,10 @@ export default class ImageViewer extends React.Component {
                 className="lb-canvas"
                 onClick={e=>onClose(e)}>
                     <img draggable = "false"
-                    style={{transform: this.createTransform(this.state.x,this.state.y,this.state.zoom,this.state.rotate)}}
+                    style={{
+                        transform: this.createTransform(this.state.x,this.state.y,this.state.zoom,this.state.rotate),
+                        cursor: this.state.zoom > 1? "grab":"unset"
+                    }}
                     onMouseDown={e=>this.startMove(e)}
                     onTouchStart={e=>this.startMove(e)}
                     onMouseMove={e=>this.duringMove(e)}
