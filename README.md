@@ -1,5 +1,5 @@
 # Lightbox-like Image viewer for React
-lightbox like image viewer for react with zoom, rotate and move feature with single or multi image. Includes basic touch support. 
+Lightbox image image viewer for react with zoom, rotate and move feature with single or multi image. Includes basic touch support. 
 
 ## 🚀[See it in Action](https://theanam.github.io/react-awesome-lightbox/)
 
@@ -55,6 +55,9 @@ Lightbox can be customized with the following properties
 |allowReset|true|Determine if reset buttons should be shown|
 |buttonAlign|"flex-end"|Determine how to align the toolbar buttons <br> options are: `flex-end`, `flex-start`, `center`| 
 |showTitle|true|Determines if title should be shown if available|
+
+### Styling
+All the styles are in the `build/style.css` file. If you want to modify the CSS, download this file and customize it. then include the custom CSS file instead of the file from the package.
 
 ### Todo: 
 
