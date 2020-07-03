@@ -125,13 +125,14 @@ export default class ImageViewer extends React.Component {
         let {
             allowZoom   = true,
             allowRotate = true,
-            allowReset  = true
+            allowReset  = true,
+            buttonAlign = "flex-end"
         } = this.props;
         let {x,y,zoom,rotate} = this.state;
         if(!image) return null;
         return (
             <div className="lb-container">
-                <div className="lb-header">
+                <div className="lb-header" style={{justifyContent: buttonAlign}}>
                     <Cond condition = {this.state.multi}>
                         <div className="lb-button prev" onClick={()=>this.navigateImage("prev")}></div>
                         <div className="lb-button next" onClick={()=>this.navigateImage("next")}></div>
@@ -145,7 +146,7 @@ export default class ImageViewer extends React.Component {
                         <div className="lb-button rotater" onClick={()=>this.applyRotate("cw")}></div>
                     </Cond>
                     {allowReset?<div className="lb-button reload" onClick={this.reset}></div>:null}
-                    <div className="lb-button close" onClick={e=>this.exit(e)}></div>
+                    <div className="lb-button close" style={{order: buttonAlign === "flex-start"?"-1":"unset"}} onClick={e=>this.exit(e)}></div>
                 </div>
                 <div 
                 className="lb-canvas"
