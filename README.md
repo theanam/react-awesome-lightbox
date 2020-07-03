@@ -45,7 +45,7 @@ Lightbox can be customized with the following properties
 |images|null| Takes an `array` of inage <br> and starts the lightbox <br> in multi image mode. *If you supply both `image` and <br>`images` prop, `image` is ignored. <br> supported formats : `["url1","url2"...]` <br> or<br> `[{url"url",title:"title"}...]`|
 |startIndex|0|If the lightbox is in multiple image mode,<br> the starting image index|
 |zoomStep|0.3|Step for zoom in or zoom out,<br> 1 means 100% so, default 0.3 means 30%|
-|onClose|null|This function determines how to react when the close button is pressed|
+|onClose|null|This function determines how to<br> react when the close button is pressed|
 |allowZoom|true|Determines if image zoom controls should be shown|
 |allowRotate|true|Determine if image rotate controls should be shown|
 |allowReset|true|Determine if reset buttons should be shown|
@@ -53,7 +53,5 @@ Lightbox can be customized with the following properties
 |showTitle|true|Determines if title should be shown if available|
 |visible|true|Determine if the lightbox will be <br> visible. helpful when you are <br> planning to show it depending on a condition|
 
-
-**** 
 
 Released under the MIT license. Contributions are welcome 🖤
