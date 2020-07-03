@@ -34,6 +34,12 @@ export default class Lightbox extends React.Component {
         current : this.props?.startIndex ?? 0,
         multi   : this.props?.images?.length? true: false
     }
+    componentWillMount(){
+        document.body.classList.add("lb-open-lightbox");
+    }
+    componentWillUnmount(){
+        document.body.classList.remove("lb-open-lightbox");
+    }
     createTransform = (x,y,zoom,rotate) => `translate3d(${x}px,${y}px,0px) scale(${zoom}) rotate(${rotate}deg)`;
     stopSideEffect  = (e) => e.stopPropagation();
     preventDefault  = (e) => e.preventDefault();
