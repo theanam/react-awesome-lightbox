@@ -28,7 +28,7 @@ export default class ImageViewer extends React.Component {
     stopSideEffect = (e) => e.stopPropagation();
     preventDefault = (e)=> e.preventDefault();
     startMove = (e) => {
-        if(!this.state.zoom > 1) return false;
+        if(this.state.zoom <= 1) return false;
         this.moving = true;
         this.preventDefault(e);
         let xy = getXY(e);
@@ -58,6 +58,7 @@ export default class ImageViewer extends React.Component {
                 break;
             case "out":
                 if(this.state.zoom > 1) this.setState({zoom: this.state.zoom - zoomStep});
+                else this.setState({x:0,y:0});
                 break;
             default:
                 console.error("Wrong function invocation");

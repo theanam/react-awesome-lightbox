@@ -67,7 +67,7 @@
     max-height: 80vh;
     min-width: 100px;
     min-height: 100px;
-    transition: all 0.08s;
+    transition: all 0.1s;
     cursor: grab;
     background-image: url("assets/spinner.svg");
     background-position: center center;
