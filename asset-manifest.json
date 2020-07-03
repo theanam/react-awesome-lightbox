@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/react-awesome-lightbox/static/css/main.973b50ec.chunk.css",
+    "main.js": "/react-awesome-lightbox/static/js/main.acd29c55.chunk.js",
+    "main.js.map": "/react-awesome-lightbox/static/js/main.acd29c55.chunk.js.map",
+    "runtime-main.js": "/react-awesome-lightbox/static/js/runtime-main.a52ff741.js",
+    "runtime-main.js.map": "/react-awesome-lightbox/static/js/runtime-main.a52ff741.js.map",
+    "static/js/2.5e92eece.chunk.js": "/react-awesome-lightbox/static/js/2.5e92eece.chunk.js",
+    "static/js/2.5e92eece.chunk.js.map": "/react-awesome-lightbox/static/js/2.5e92eece.chunk.js.map",
+    "index.html": "/react-awesome-lightbox/index.html",
+    "precache-manifest.53ebe8d9c36e0826a63e038066a37dd8.js": "/react-awesome-lightbox/precache-manifest.53ebe8d9c36e0826a63e038066a37dd8.js",
+    "service-worker.js": "/react-awesome-lightbox/service-worker.js",
+    "static/css/main.973b50ec.chunk.css.map": "/react-awesome-lightbox/static/css/main.973b50ec.chunk.css.map",
+    "static/js/2.5e92eece.chunk.js.LICENSE.txt": "/react-awesome-lightbox/static/js/2.5e92eece.chunk.js.LICENSE.txt",
+    "static/media/style.css": "/react-awesome-lightbox/static/media/undo.2440673b.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a52ff741.js",
+    "static/js/2.5e92eece.chunk.js",
+    "static/css/main.973b50ec.chunk.css",
+    "static/js/main.acd29c55.chunk.js"
+  ]
+}
