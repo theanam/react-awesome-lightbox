@@ -116,7 +116,7 @@ export default class Lightbox extends React.Component {
                 console.error("Wrong function invocation");
         }
     }
-    reset = () => this.setState({x:0,y:0,zoom:1,rorate:0});
+    reset = () => this.setState({x:0,y:0,zoom:1,rotate:0});
     exit  = (e) =>{
         if(typeof this.props.onClose === "function") return this.props.onClose(e);
         console.warn("No Exit function passed on props: onClose");
