@@ -111,31 +111,49 @@ export default class ImageViewer extends React.Component {
         }
     }
     reset = () => this.setState({x:0,y:0,zoom:1,rorate:0});
+    exit  = (e) =>{
+        if(typeof this.props.onClose === "function") return this.props.onClose(e);
+        console.warn("No Exit function passed on props: onClose");
+    }
+    canvasClick = (e) => {
+        let {clickOutsideToExit = true} = this.props;
+        if(clickOutsideToExit) return this.exit(e);
+    }
     render(){
         let image = this.getCurrentImage(this.state,this.props);
         let title = this.getCurrentTitle(this.state,this.props);
+        let {
+            allowZoom   = true,
+            allowRotate = true,
+            allowReset  = true
+        } = this.props;
+        let {x,y,zoom,rotate} = this.state;
         if(!image) return null;
         return (
             <div className="lb-container">
                 <div className="lb-header">
-                    <Cond condition={this.state.multi}>
+                    <Cond condition = {this.state.multi}>
                         <div className="lb-button prev" onClick={()=>this.navigateImage("prev")}></div>
                         <div className="lb-button next" onClick={()=>this.navigateImage("next")}></div>
                     </Cond>
-                    <div className="lb-button zoomin" onClick={()=>this.applyZoom("in")}></div>
-                    <div className="lb-button zoomout" onClick={()=>this.applyZoom("out")}></div>
-                    <div className="lb-button rotatel" onClick={()=>this.applyRotate("acw")}></div>
-                    <div className="lb-button rotater" onClick={()=>this.applyRotate("cw")}></div>
-                    <div className="lb-button reload" onClick={this.reset}></div>
-                    <div className="lb-button close" onClick={e=>this.props.onClose(e)}></div>
+                    <Cond condition = {allowZoom}>
+                        <div className="lb-button zoomin" onClick={()=>this.applyZoom("in")}></div>
+                        <div className="lb-button zoomout" onClick={()=>this.applyZoom("out")}></div>
+                    </Cond>
+                    <Cond condition = {allowRotate}>
+                        <div className="lb-button rotatel" onClick={()=>this.applyRotate("acw")}></div>
+                        <div className="lb-button rotater" onClick={()=>this.applyRotate("cw")}></div>
+                    </Cond>
+                    {allowReset?<div className="lb-button reload" onClick={this.reset}></div>:null}
+                    <div className="lb-button close" onClick={e=>this.exit(e)}></div>
                 </div>
                 <div 
                 className="lb-canvas"
-                onClick={e=>onClose(e)}>
+                onClick={e=>this.canvasClick(e)}>
                     <img draggable = "false"
                     style={{
-                        transform: this.createTransform(this.state.x,this.state.y,this.state.zoom,this.state.rotate),
-                        cursor: this.state.zoom > 1? "grab":"unset"
+                        transform : this.createTransform(x,y,zoom,rotate),
+                        cursor    : this.state.zoom > 1? "grab":"unset"
                     }}
                     onMouseDown={e=>this.startMove(e)}
                     onTouchStart={e=>this.startMove(e)}
