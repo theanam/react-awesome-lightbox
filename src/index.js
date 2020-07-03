@@ -51,7 +51,8 @@ export default class Lightbox extends React.Component {
         if(!s.multi) return p.title ?? "";
         return p.images?.[s.current]?.title ?? "";
     }
-    navigateImage = (direction) =>{
+    navigateImage = (direction, e) =>{
+        this.stopSideEffect(e);
         let current = 0;
         switch(direction){
             case "next":
@@ -116,7 +117,10 @@ export default class Lightbox extends React.Component {
                 console.error("Wrong function invocation");
         }
     }
-    reset = () => this.setState({x:0,y:0,zoom:1,rotate:0});
+    reset = e => {
+        this.stopSideEffect(e);
+        this.setState({x:0,y:0,zoom:1,rotate:0});
+    };
     exit  = (e) =>{
         if(typeof this.props.onClose === "function") return this.props.onClose(e);
         console.warn("No Exit function passed on props: onClose");
@@ -153,8 +157,8 @@ export default class Lightbox extends React.Component {
                         </div>  
                     </Cond>
                     <Cond condition = {this.state.multi}>
-                        <div title="Previous" className="lb-button prev" onClick={()=>this.navigateImage("prev")}></div>
-                        <div title="Next" className="lb-button next" onClick={()=>this.navigateImage("next")}></div>
+                        <div title="Previous" className="lb-button prev lb-hide-mobile" onClick={()=>this.navigateImage("prev", e)}></div>
+                        <div title="Next" className="lb-button next lb-hide-mobile" onClick={()=>this.navigateImage("next", e)}></div>
                     </Cond>
                     <Cond condition = {allowZoom}>
                         <div title="Zoom In" className="lb-button zoomin" onClick={()=>this.applyZoom("in")}></div>
@@ -164,7 +168,7 @@ export default class Lightbox extends React.Component {
                         <div title="Rotate left" className="lb-button rotatel" onClick={()=>this.applyRotate("acw")}></div>
                         <div title="Rotate right" className="lb-button rotater" onClick={()=>this.applyRotate("cw")}></div>
                     </Cond>
-                    {allowReset?<div title="Reset" className="lb-button reload" onClick={this.reset}></div>:null}
+                    {allowReset?<div title="Reset" className="lb-button lb-hide-mobile reload" onClick={this.reset}></div>:null}
                     <div title="Close" className="lb-button close" style={{order: buttonAlign === "flex-start"?"-1":"unset"}} onClick={e=>this.exit(e)}></div>
                 </div>
                 <div 
@@ -186,6 +190,13 @@ export default class Lightbox extends React.Component {
                     className="lb-img"
                     title={title}
                     src={image} alt={title}/>
+                    <Cond condition={this.state.multi}>
+                        <div className="mobile-controls lb-show-mobile">
+                            <div title="Previous" className="lb-button prev" onClick={e=>this.navigateImage("prev", e)}></div>
+                            {allowReset?<div title="Reset" className="lb-button reload" onClick={this.reset}></div>:null}
+                            <div title="Next" className="lb-button next" onClick={e=>this.navigateImage("next", e)}></div>
+                        </div>
+                    </Cond>
                 </div>
             </div>
         )
