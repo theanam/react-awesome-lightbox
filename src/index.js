@@ -20,7 +20,7 @@ function Cond(props){
         </React.Fragment>
     );
 }
-export default class ImageViewer extends React.Component {
+export default class Lightbox extends React.Component {
     moving = false;
     initX  = 0;
     initY  = 0;

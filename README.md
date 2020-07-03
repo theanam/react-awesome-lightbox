@@ -7,13 +7,13 @@ lightbox like image viewer for react with zoom, rotate and move feature with sin
 
 To install, run the following command with your favourite package manager: 
 ```shell
-yarn add react-light-box
+yarn add react-awesome-lightbox
 ```
 Once installed, include it in your project like this: 
 ```js
-import Lightbox from "react-imageviewer";
+import Lightbox from "react-awesome-lightbox";
 // You need to import the CSS only once
-import "react-imageviewer/build/style.css";
+import "react-awesome-lightbox/build/style.css";
 ```
 Then use it like this for single image:
 
