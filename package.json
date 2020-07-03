@@ -22,19 +22,41 @@
         "email": "anam.ahmed.a@gmail.com"
     },
     "devDependencies": {
-        "babel-cli": "^6.24.1",
-        "babel-core": "^6.24.1",
-        "babel-loader": "^7.0.0",
-        "babel-plugin-transform-object-rest-spread": "^6.23.0",
-        "babel-plugin-transform-react-jsx": "^6.24.1",
-        "babel-preset-env": "^1.5.1",
-        "react": "^16",
-        "webpack": "^4",
-        "webpack-cli": "3.3"
+        "@babel/core": "^7.10.4",
+        "babel-loader": "8.1.0",
+        "file-loader": "4.3.0",
+        "url-loader": "2.3.0",
+        "webpack": "4.42.0",
+        "webpack-cli": "^3.3.12"
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-react",
+            "@babel/preset-env"
+        ],
+        "plugins": [
+            "@babel/plugin-proposal-class-properties"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
     },
     "license": "MIT",
     "repository": {
         "type": "git",
         "url": "git@github.com:theanam/react-imageviewer.git"
+    },
+    "dependencies": {
+        "@babel/preset-env": "^7.10.4",
+        "@babel/preset-react": "^7.10.4"
     }
 }
