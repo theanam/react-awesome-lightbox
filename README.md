@@ -1,6 +1,8 @@
 # Lightbox-like Image viewer for React
 lightbox like image viewer for react with zoom, rotate and move feature with single or multi image and touch support
 
+![Imgur](https://imgur.com/PBETb8p.gif)
+
 ## How to use 
 
 ### Initial Setup
