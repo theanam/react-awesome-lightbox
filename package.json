@@ -1,13 +1,15 @@
 {
-    "name": "react-imageviewer",
+    "name": "react-light-box",
     "version": "1.0.0",
-    "description": "lightbox like image viewer for react with zoom, rotate and move feature with touch support",
+    "description": "lightbox like image viewer for react with zoom, rotate. Single or multi image mode and touch support",
     "keywords": [
         "react",
         "image viewer",
         "lightbox",
         "image zoom",
-        "image rotate"
+        "image rotate",
+        "image gallery",
+        "react lightbox"
     ],
     "main": "build/index.js",
     "peerDependencies": {
@@ -27,6 +29,8 @@
         "file-loader": "4.3.0",
         "url-loader": "2.3.0",
         "webpack": "4.42.0",
+        "@babel/preset-env": "^7.10.4",
+        "@babel/preset-react": "^7.10.4",
         "webpack-cli": "^3.3.12"
     },
     "babel": {
@@ -55,8 +59,5 @@
         "type": "git",
         "url": "git@github.com:theanam/react-imageviewer.git"
     },
-    "dependencies": {
-        "@babel/preset-env": "^7.10.4",
-        "@babel/preset-react": "^7.10.4"
-    }
+    "dependencies": {}
 }

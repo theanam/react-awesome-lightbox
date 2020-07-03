@@ -31,7 +31,7 @@ export default class ImageViewer extends React.Component {
         y       : 0,
         zoom    : 1,
         rotate  : 0,
-        current : 0,
+        current : this.props?.startIndex ?? 0,
         multi   : this.props?.images?.length? true: false
     }
     createTransform = (x,y,zoom,rotate) => `translate3d(${x}px,${y}px,0px) scale(${zoom}) rotate(${rotate}deg)`;
@@ -127,10 +127,11 @@ export default class ImageViewer extends React.Component {
             allowRotate = true,
             allowReset  = true,
             buttonAlign = "flex-end",
-            showTitle   = true
+            showTitle   = true,
+            visible     = true
         } = this.props;
         let {x,y,zoom,rotate} = this.state;
-        if(!image) return null;
+        if(!image || !visible) return null;
         return (
             <div className="lb-container">
                 <div className="lb-header" style={{justifyContent: buttonAlign}}>
