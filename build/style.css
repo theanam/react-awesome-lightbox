@@ -53,6 +53,13 @@
 .lb-header .lb-button.reload{
     background-image: url("assets/reload.svg");
 }
+.lb-header .lb-button.prev{
+    background-image: url("assets/arrow.svg");
+}
+.lb-header .lb-button.next{
+    background-image: url("assets/arrow.svg");
+    transform: rotateY(180deg);
+}
 .lb-container .lb-canvas{
     flex: 1;
     display: flex;

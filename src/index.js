@@ -12,6 +12,14 @@ function getXY(e){
     }
     return {x,y}
 }
+function Cond(props){
+    if(!props.condition) return null;
+    return (
+        <React.Fragment>
+            {props.children}
+        </React.Fragment>
+    );
+}
 export default class ImageViewer extends React.Component {
     moving = false;
     initX  = 0;
@@ -19,14 +27,40 @@ export default class ImageViewer extends React.Component {
     lastX  = 0;
     lastY  = 0;
     state = {
-        x      : 0,
-        y      : 0,
-        zoom   : 1,
-        rotate : 0
+        x       : 0,
+        y       : 0,
+        zoom    : 1,
+        rotate  : 0,
+        current : 0,
+        multi   : this.props?.images?.length? true: false
     }
     createTransform = (x,y,zoom,rotate) => `translate3d(${x}px,${y}px,0px) scale(${zoom}) rotate(${rotate}deg)`;
     stopSideEffect  = (e) => e.stopPropagation();
-    preventDefault  = (e)=> e.preventDefault();
+    preventDefault  = (e) => e.preventDefault();
+    getCurrentImage = (s,p) => {
+        if(!s.multi) return p.image || "";
+        return p.images[s.current]?.url || p.images[s.current] || "";
+    }
+    getCurrentTitle = (s,p)  => {
+        if(!s.multi) return p.title || "";
+        return p.images?.[s.current]?.title || "";
+    }
+    navigateImage = (direction) =>{
+        let current = 0;
+        switch(direction){
+            case "next":
+                current = this.state.current + 1;
+                break;
+            case "prev":
+                current = this.state.current - 1;
+                break;
+            default:
+                console.error("Illegal Invocation");
+        }
+        if(current >= this.props.images.length) current = 0;
+        else if (current < 0) current = this.props.images.length -1;
+        this.setState({current, x: 0, y: 0, zoom: 1, rotate: 0});
+    }
     startMove = (e) => {
         if(this.state.zoom <= 1) return false;
         this.moving = true;
@@ -78,10 +112,16 @@ export default class ImageViewer extends React.Component {
     }
     reset = () => this.setState({x:0,y:0,zoom:1,rorate:0});
     render(){
-        if(!this.props.image) return null;
+        let image = this.getCurrentImage(this.state,this.props);
+        let title = this.getCurrentTitle(this.state,this.props);
+        if(!image) return null;
         return (
             <div className="lb-container">
                 <div className="lb-header">
+                    <Cond condition={this.state.multi}>
+                        <div className="lb-button prev" onClick={()=>this.navigateImage("prev")}></div>
+                        <div className="lb-button next" onClick={()=>this.navigateImage("next")}></div>
+                    </Cond>
                     <div className="lb-button zoomin" onClick={()=>this.applyZoom("in")}></div>
                     <div className="lb-button zoomout" onClick={()=>this.applyZoom("out")}></div>
                     <div className="lb-button rotatel" onClick={()=>this.applyRotate("acw")}></div>
@@ -106,7 +146,7 @@ export default class ImageViewer extends React.Component {
                     onTouchEnd={e=>this.endMove(e)}
                     onClick={e=>this.stopSideEffect(e)}
                     className="lb-img"
-                    src={this.props.image} alt={this.props.title}/>
+                    src={image} alt={title}/>
                 </div>
             </div>
         )
