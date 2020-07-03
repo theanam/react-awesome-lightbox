@@ -127,11 +127,13 @@ export default class Lightbox extends React.Component {
             allowRotate = true,
             allowReset  = true,
             buttonAlign = "flex-end",
-            showTitle   = true,
-            visible     = true
+            showTitle   = true
         } = this.props;
         let {x,y,zoom,rotate} = this.state;
-        if(!image || !visible) return null;
+        if(!image){
+            console.warn("Not showing lightbox because no image(s) was supplied");
+            return null;
+        }
         return (
             <div className="lb-container">
                 <div className="lb-header" style={{justifyContent: buttonAlign}}>

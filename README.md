@@ -51,7 +51,6 @@ Lightbox can be customized with the following properties
 |allowReset|true|Determine if reset buttons should be shown|
 |buttonAlign|"flex-end"|Determine how to align the toolbar buttons <br> options are: `flex-end`, `flex-start`, `center`| 
 |showTitle|true|Determines if title should be shown if available|
-|visible|true|Determine if the lightbox will be <br> visible. helpful when you are <br> planning to show it depending on a condition|
 
 
 Released under the MIT license. Contributions are welcome 🖤
