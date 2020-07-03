@@ -140,7 +140,7 @@ export default class ImageViewer extends React.Component {
                             display   : buttonAlign === "center"?"none":"flex",
                             order     : buttonAlign === "flex-start"?"1":"unset"
                         }}>
-                            <span style= {{textAlign : buttonAlign === "flex-start"?"right":"left"}}>{title}</span>
+                            <span title={title} style= {{textAlign : buttonAlign === "flex-start"?"right":"left"}}>{title}</span>
                         </div>  
                     </Cond>
                     <Cond condition = {this.state.multi}>
@@ -175,6 +175,7 @@ export default class ImageViewer extends React.Component {
                     onTouchEnd={e=>this.endMove(e)}
                     onClick={e=>this.stopSideEffect(e)}
                     className="lb-img"
+                    title={title}
                     src={image} alt={title}/>
                 </div>
             </div>
