@@ -157,8 +157,8 @@ export default class Lightbox extends React.Component {
                         </div>  
                     </Cond>
                     <Cond condition = {this.state.multi}>
-                        <div title="Previous" className="lb-button prev lb-hide-mobile" onClick={()=>this.navigateImage("prev", e)}></div>
-                        <div title="Next" className="lb-button next lb-hide-mobile" onClick={()=>this.navigateImage("next", e)}></div>
+                        <div title="Previous" className="lb-button prev lb-hide-mobile" onClick={e=>this.navigateImage("prev", e)}></div>
+                        <div title="Next" className="lb-button next lb-hide-mobile" onClick={e=>this.navigateImage("next", e)}></div>
                     </Cond>
                     <Cond condition = {allowZoom}>
                         <div title="Zoom In" className="lb-button zoomin" onClick={()=>this.applyZoom("in")}></div>
