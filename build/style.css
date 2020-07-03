@@ -60,6 +60,20 @@
     background-image: url("assets/arrow.svg");
     transform: rotateY(180deg);
 }
+.lb-header .lb-title{
+    flex: 1;
+    align-items: center;
+    color: white;
+    font-size: 1.1em;
+    padding: 0em 0.8em;
+    overflow: hidden;
+}
+.lb-header .lb-title span{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
 .lb-container .lb-canvas{
     flex: 1;
     display: flex;

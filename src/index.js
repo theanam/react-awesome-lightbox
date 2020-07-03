@@ -126,13 +126,24 @@ export default class ImageViewer extends React.Component {
             allowZoom   = true,
             allowRotate = true,
             allowReset  = true,
-            buttonAlign = "flex-end"
+            buttonAlign = "flex-end",
+            showTitle   = true
         } = this.props;
         let {x,y,zoom,rotate} = this.state;
         if(!image) return null;
         return (
             <div className="lb-container">
                 <div className="lb-header" style={{justifyContent: buttonAlign}}>
+                    <Cond condition = {showTitle && title}>
+                        <div class="lb-title"
+                        style={{
+                            display: buttonAlign === "center"?"none":"flex",
+                            order: buttonAlign === "flex-start"?"1":"unset",
+                            textAlign: buttonAlign === "flex-start"?"right":"left",
+                        }}>
+                            <span>{title}</span>
+                        </div>  
+                    </Cond>
                     <Cond condition = {this.state.multi}>
                         <div className="lb-button prev" onClick={()=>this.navigateImage("prev")}></div>
                         <div className="lb-button next" onClick={()=>this.navigateImage("next")}></div>
