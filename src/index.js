@@ -37,7 +37,6 @@ export default class Lightbox extends React.Component {
     }
     createTransform = (x,y,zoom,rotate) => `translate3d(${x}px,${y}px,0px) scale(${zoom}) rotate(${rotate}deg)`;
     stopSideEffect  = (e) => e.stopPropagation();
-    preventDefault  = (e) => e.preventDefault();
     getCurrentImage = (s,p) => {
         if(!s.multi) return p.image ?? "";
         return p.images[s.current]?.url ?? p.images?.[s.current] ?? "";
@@ -64,14 +63,12 @@ export default class Lightbox extends React.Component {
     startMove = (e) => {
         if(this.state.zoom <= 1) return false;
         this.moving = true;
-        this.preventDefault(e);
         let xy = getXY(e);
         this.initX  = xy.x - this.lastX;
         this.initY  = xy.y - this.lastY;
     }
     duringMove = (e) => {
         if(!this.moving) return false;
-        this.preventDefault(e);
         let xy = getXY(e);
         this.lastX = xy.x - this.initX;
         this.lastY = xy.y - this.initY;
@@ -81,7 +78,6 @@ export default class Lightbox extends React.Component {
         });
     }
     endMove = (e) =>{
-        this.preventDefault(e);
         this.moving = false;
     }
     applyZoom = (type) => {
