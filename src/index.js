@@ -35,12 +35,6 @@ export default class Lightbox extends React.Component {
         current : this.props?.startIndex ?? 0,
         multi   : this.props?.images?.length? true: false
     }
-    componentWillMount(){
-        document.body.classList.add("lb-open-lightbox");
-    }
-    componentWillUnmount(){
-        document.body.classList.remove("lb-open-lightbox");
-    }
     createTransform = (x,y,zoom,rotate) => `translate3d(${x}px,${y}px,0px) scale(${zoom}) rotate(${rotate}deg)`;
     stopSideEffect  = (e) => e.stopPropagation();
     preventDefault  = (e) => e.preventDefault();
@@ -62,8 +56,6 @@ export default class Lightbox extends React.Component {
             case "prev":
                 current = this.state.current - 1;
                 break;
-            default:
-                console.error("Illegal Invocation");
         }
         if(current >= this.props.images.length) current = 0;
         else if (current < 0) current = this.props.images.length -1;
@@ -102,8 +94,6 @@ export default class Lightbox extends React.Component {
                 if(this.state.zoom > 1) this.setState({zoom: this.state.zoom - zoomStep});
                 else this.setState({x:0,y:0});
                 break;
-            default:
-                console.error("Wrong function invocation");
         }
     }
     applyRotate = (type) => {
@@ -114,8 +104,6 @@ export default class Lightbox extends React.Component {
             case "acw":
                 this.setState({rotate: this.state.rotate - 90});
                 break;
-            default:
-                console.error("Wrong function invocation");
         }
     }
     reset = e => {
@@ -129,6 +117,26 @@ export default class Lightbox extends React.Component {
     canvasClick = (e) => {
         let {clickOutsideToExit = true} = this.props;
         if(clickOutsideToExit) return this.exit(e);
+    }
+    keyboardNavigation = e => {
+        switch(e.key){
+            case "ArrowLeft":
+                this.navigateImage("prev", e);
+                break;
+            case "ArrowRight":
+                this.navigateImage("next", e);
+                break;
+        }
+    }
+    componentDidMount(){
+        document.body.classList.add("lb-open-lightbox");
+        let {keyboardNavigation = true} = this.props;
+        this.state.multi && keyboardNavigation && document.addEventListener("keyup", this.keyboardNavigation);
+    }
+    componentWillUnmount(){
+        document.body.classList.remove("lb-open-lightbox");
+        let {keyboardNavigation = true} = this.props;
+        this.state.multi && keyboardNavigation && document.removeEventListener("keyup", this.keyboardNavigation);
     }
     render(){
         let image = this.getCurrentImage(this.state,this.props);

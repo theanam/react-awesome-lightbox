@@ -5,6 +5,17 @@ Lightbox image image viewer for react with zoom, rotate and move feature with si
 
 ![imgur](https://imgur.com/rGnutjz.gif)
 
+## Features
+
+* Fully Responsive
+* Single Image Mode
+* Multiple Image Mode
+* Zoom and move Support
+* Full 360 deg rotate support
+* Touch Support
+* Keyboard Navigation
+* Supports all major browsers
+
 ## How to use 
 
 #### Setting up
@@ -55,13 +66,12 @@ Lightbox can be customized with the following properties
 |allowReset|true|Determine if reset buttons should be shown|
 |buttonAlign|"flex-end"|Determine how to align the toolbar buttons <br> options are: `flex-end`, `flex-start`, `center`| 
 |showTitle|true|Determines if title should be shown if available|
-
+|keyboardNavigation|true|Determine if images can be navigated <br> with left and right <br> keyboard keys|
 ### Styling
 All the styles are in the `build/style.css` file. If you want to modify the CSS, download this file and customize it. then include the custom CSS file instead of the file from the package.
 
 ### Todo: 
-
-* Keyboard Navigation 
+* Double tap/click to zoom
 * Pinch to Zoom
 
 Released under the MIT license. Contributions are welcome 🖤
