@@ -32,6 +32,7 @@ export default class Lightbox extends React.Component {
         zoom    : 1,
         rotate  : 0,
         loading : true,
+        moving  : false,
         current : this.props?.startIndex ?? 0,
         multi   : this.props?.images?.length? true: false
     }
@@ -62,13 +63,13 @@ export default class Lightbox extends React.Component {
     }
     startMove = (e) => {
         if(this.state.zoom <= 1) return false;
-        this.moving = true;
+        this.setState({moving: true});
         let xy = getXY(e);
         this.initX  = xy.x - this.lastX;
         this.initY  = xy.y - this.lastY;
     }
     duringMove = (e) => {
-        if(!this.moving) return false;
+        if(!this.state.moving) return false;
         let xy = getXY(e);
         this.lastX = xy.x - this.initX;
         this.lastY = xy.y - this.initY;
@@ -77,9 +78,7 @@ export default class Lightbox extends React.Component {
             y: xy.y - this.initY
         });
     }
-    endMove = (e) =>{
-        this.moving = false;
-    }
+    endMove = (e) => this.setState({moving: false});
     applyZoom = (type) => {
         let {zoomStep = 0.3} = this.props;
         switch(type){
@@ -181,8 +180,9 @@ export default class Lightbox extends React.Component {
                 onClick={e=>this.canvasClick(e)}>
                     <img draggable = "false"
                     style={{
-                        transform : this.createTransform(x,y,zoom,rotate),
-                        cursor    : this.state.zoom > 1? "grab":"unset"
+                        transform  : this.createTransform(x,y,zoom,rotate),
+                        cursor     : this.state.zoom > 1? "grab":"unset",
+                        transition : this.state.moving?"none":"all 0.1s"
                     }}
                     onMouseDown={e=>this.startMove(e)}
                     onTouchStart={e=>this.startMove(e)}

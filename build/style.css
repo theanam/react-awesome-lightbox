@@ -90,7 +90,7 @@
     max-height: 80vh;
     min-width: 100px;
     min-height: 100px;
-    transition: all 0.1s;
+    /* transition: all 0.1s; */
     cursor: grab;
     background-size: 50px;
     transform-origin: center center;

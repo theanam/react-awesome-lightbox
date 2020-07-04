@@ -8,10 +8,11 @@ Lightbox image image viewer for react with zoom, rotate and move feature with si
 ## Features
 
 * Fully Responsive
+* Smooth transitions
 * Single Image Mode
 * Multiple Image Mode
 * Zoom and move Support
-* Full 360 deg rotate support
+* Full 360 degree rotate support
 * Touch Support
 * Keyboard Navigation
 * Supports all major browsers
