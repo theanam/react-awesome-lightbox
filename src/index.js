@@ -31,6 +31,7 @@ export default class Lightbox extends React.Component {
         y       : 0,
         zoom    : 1,
         rotate  : 0,
+        loading : true,
         current : this.props?.startIndex ?? 0,
         multi   : this.props?.images?.length? true: false
     }
@@ -66,7 +67,7 @@ export default class Lightbox extends React.Component {
         }
         if(current >= this.props.images.length) current = 0;
         else if (current < 0) current = this.props.images.length -1;
-        this.setState({current, x: 0, y: 0, zoom: 1, rotate: 0});
+        this.setState({current, x: 0, y: 0, zoom: 1, rotate: 0, loading: true});
     }
     startMove = (e) => {
         if(this.state.zoom <= 1) return false;
@@ -157,19 +158,19 @@ export default class Lightbox extends React.Component {
                         </div>  
                     </Cond>
                     <Cond condition = {this.state.multi}>
-                        <div title="Previous" className="lb-button prev lb-hide-mobile" onClick={e=>this.navigateImage("prev", e)}></div>
-                        <div title="Next" className="lb-button next lb-hide-mobile" onClick={e=>this.navigateImage("next", e)}></div>
+                        <div title="Previous" className="lb-button lb-icon-arrow prev lb-hide-mobile" onClick={e=>this.navigateImage("prev", e)}></div>
+                        <div title="Next" className="lb-button lb-icon-arrow next lb-hide-mobile" onClick={e=>this.navigateImage("next", e)}></div>
                     </Cond>
                     <Cond condition = {allowZoom}>
-                        <div title="Zoom In" className="lb-button zoomin" onClick={()=>this.applyZoom("in")}></div>
-                        <div title="Zoom Out" className="lb-button zoomout" onClick={()=>this.applyZoom("out")}></div>
+                        <div title="Zoom In" className="lb-button lb-icon-zoomin zoomin" onClick={()=>this.applyZoom("in")}></div>
+                        <div title="Zoom Out" className="lb-button lb-icon-zoomout zoomout" onClick={()=>this.applyZoom("out")}></div>
                     </Cond>
                     <Cond condition = {allowRotate}>
-                        <div title="Rotate left" className="lb-button rotatel" onClick={()=>this.applyRotate("acw")}></div>
-                        <div title="Rotate right" className="lb-button rotater" onClick={()=>this.applyRotate("cw")}></div>
+                        <div title="Rotate left" className="lb-button lb-icon-rotate rotatel" onClick={()=>this.applyRotate("acw")}></div>
+                        <div title="Rotate right" className="lb-button lb-icon-rotate rotater" onClick={()=>this.applyRotate("cw")}></div>
                     </Cond>
-                    {allowReset?<div title="Reset" className="lb-button lb-hide-mobile reload" onClick={this.reset}></div>:null}
-                    <div title="Close" className="lb-button close" style={{order: buttonAlign === "flex-start"?"-1":"unset"}} onClick={e=>this.exit(e)}></div>
+                    {allowReset?<div title="Reset" className="lb-button lb-icon-reset lb-hide-mobile reload" onClick={this.reset}></div>:null}
+                    <div title="Close" className="lb-button lb-icon-close close" style={{order: buttonAlign === "flex-start"?"-1":"unset"}} onClick={e=>this.exit(e)}></div>
                 </div>
                 <div 
                 className="lb-canvas"
@@ -187,14 +188,15 @@ export default class Lightbox extends React.Component {
                     onMouseLeave={e=>this.endMove(e)}
                     onTouchEnd={e=>this.endMove(e)}
                     onClick={e=>this.stopSideEffect(e)}
-                    className="lb-img"
+                    onLoad={e=>this.setState({loading: false})}
+                    className={`lb-img${this.state.loading?" lb-loading":""}`}
                     title={title}
                     src={image} alt={title}/>
                     <Cond condition={this.state.multi}>
                         <div className="mobile-controls lb-show-mobile">
-                            <div title="Previous" className="lb-button prev" onClick={e=>this.navigateImage("prev", e)}></div>
-                            {allowReset?<div title="Reset" className="lb-button reload" onClick={this.reset}></div>:null}
-                            <div title="Next" className="lb-button next" onClick={e=>this.navigateImage("next", e)}></div>
+                            <div title="Previous" className="lb-button lb-icon-arrow prev" onClick={e=>this.navigateImage("prev", e)}></div>
+                            {allowReset?<div title="Reset" className="lb-button lb-icon-reset reload" onClick={this.reset}></div>:null}
+                            <div title="Next" className="lb-button lb-icon-arrow next" onClick={e=>this.navigateImage("next", e)}></div>
                         </div>
                     </Cond>
                 </div>
