@@ -122,7 +122,7 @@
     margin: 0.2em;
     cursor: pointer;
 }
-.mobile-controls .lb-button:hover{
+.mobile-controls .lb-button:active{
     background-color:#777;
 }
 .mobile-controls .lb-button.next{
@@ -132,6 +132,12 @@
     display: none;   
 }
 @media (max-width:600px){
+    .lb-header .lb-button:hover{
+        background-color: inherit;
+    }
+    .lb-header .lb-button:active{
+        background-color: #777;
+    }
     .lb-show-mobile{
         display: flex !important;
     }

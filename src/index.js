@@ -109,6 +109,7 @@ export default class Lightbox extends React.Component {
         if(typeof this.props.onClose === "function") return this.props.onClose(e);
         console.warn("No Exit function passed on props: onClose");
     }
+    shouldShowReset = () => (this.state.x || this.state.y || this.state.zoom !== 1 || this.state.rotate !== 0);
     canvasClick = (e) => {
         let {clickOutsideToExit = true} = this.props;
         if(clickOutsideToExit) return this.exit(e);
@@ -139,9 +140,9 @@ export default class Lightbox extends React.Component {
         let {
             allowZoom   = true,
             allowRotate = true,
-            allowReset  = true,
             buttonAlign = "flex-end",
-            showTitle   = true
+            showTitle   = true,
+            allowReset  = true
         } = this.props;
         let {x,y,zoom,rotate} = this.state;
         if(!image){
@@ -160,6 +161,7 @@ export default class Lightbox extends React.Component {
                             <span title={title} style= {{textAlign : buttonAlign === "flex-start"?"right":"left"}}>{title}</span>
                         </div>  
                     </Cond>
+                    {(allowReset && this.shouldShowReset())?<div title="Reset" className="lb-button lb-icon-reset lb-hide-mobile reload" onClick={this.reset}></div>:null}
                     <Cond condition = {this.state.multi}>
                         <div title="Previous" className="lb-button lb-icon-arrow prev lb-hide-mobile" onClick={e=>this.navigateImage("prev", e)}></div>
                         <div title="Next" className="lb-button lb-icon-arrow next lb-hide-mobile" onClick={e=>this.navigateImage("next", e)}></div>
@@ -172,7 +174,6 @@ export default class Lightbox extends React.Component {
                         <div title="Rotate left" className="lb-button lb-icon-rotate rotatel" onClick={()=>this.applyRotate("acw")}></div>
                         <div title="Rotate right" className="lb-button lb-icon-rotate rotater" onClick={()=>this.applyRotate("cw")}></div>
                     </Cond>
-                    {allowReset?<div title="Reset" className="lb-button lb-icon-reset lb-hide-mobile reload" onClick={this.reset}></div>:null}
                     <div title="Close" className="lb-button lb-icon-close close" style={{order: buttonAlign === "flex-start"?"-1":"unset"}} onClick={e=>this.exit(e)}></div>
                 </div>
                 <div 
@@ -199,7 +200,7 @@ export default class Lightbox extends React.Component {
                     <Cond condition={this.state.multi}>
                         <div className="mobile-controls lb-show-mobile">
                             <div title="Previous" className="lb-button lb-icon-arrow prev" onClick={e=>this.navigateImage("prev", e)}></div>
-                            {allowReset?<div title="Reset" className="lb-button lb-icon-reset reload" onClick={this.reset}></div>:null}
+                            {(allowReset && this.shouldShowReset())?<div title="Reset" className="lb-button lb-icon-reset reload" onClick={this.reset}></div>:null}
                             <div title="Next" className="lb-button lb-icon-arrow next" onClick={e=>this.navigateImage("next", e)}></div>
                         </div>
                     </Cond>
