@@ -173,7 +173,7 @@ export default class Lightbox extends React.Component {
                     <div title="Close" className="lb-button lb-icon-close close" style={{order: buttonAlign === "flex-start"?"-1":"unset"}} onClick={e=>this.exit(e)}></div>
                 </div>
                 <div 
-                className="lb-canvas"
+                className={`lb-canvas${this.state.loading?" lb-loading":""}`}
                 onClick={e=>this.canvasClick(e)}>
                     <img draggable = "false"
                     style={{
