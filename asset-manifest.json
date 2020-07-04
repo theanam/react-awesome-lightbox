@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/react-awesome-lightbox/static/css/main.2620819b.chunk.css",
+    "main.css": "/react-awesome-lightbox/static/css/main.48baa338.chunk.css",
     "main.js": "/react-awesome-lightbox/static/js/main.71cd4678.chunk.js",
     "main.js.map": "/react-awesome-lightbox/static/js/main.71cd4678.chunk.js.map",
     "runtime-main.js": "/react-awesome-lightbox/static/js/runtime-main.a52ff741.js",
@@ -8,15 +8,15 @@
     "static/js/2.5e92eece.chunk.js": "/react-awesome-lightbox/static/js/2.5e92eece.chunk.js",
     "static/js/2.5e92eece.chunk.js.map": "/react-awesome-lightbox/static/js/2.5e92eece.chunk.js.map",
     "index.html": "/react-awesome-lightbox/index.html",
-    "precache-manifest.519fef0f533780b2e35705df04ec857a.js": "/react-awesome-lightbox/precache-manifest.519fef0f533780b2e35705df04ec857a.js",
+    "precache-manifest.cac7058cdccc51b5d67a3f1504f591c2.js": "/react-awesome-lightbox/precache-manifest.cac7058cdccc51b5d67a3f1504f591c2.js",
     "service-worker.js": "/react-awesome-lightbox/service-worker.js",
-    "static/css/main.2620819b.chunk.css.map": "/react-awesome-lightbox/static/css/main.2620819b.chunk.css.map",
+    "static/css/main.48baa338.chunk.css.map": "/react-awesome-lightbox/static/css/main.48baa338.chunk.css.map",
     "static/js/2.5e92eece.chunk.js.LICENSE.txt": "/react-awesome-lightbox/static/js/2.5e92eece.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.a52ff741.js",
     "static/js/2.5e92eece.chunk.js",
-    "static/css/main.2620819b.chunk.css",
+    "static/css/main.48baa338.chunk.css",
     "static/js/main.71cd4678.chunk.js"
   ]
 }
