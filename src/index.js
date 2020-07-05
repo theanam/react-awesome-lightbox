@@ -21,7 +21,6 @@ function Cond(props){
     );
 }
 export default class Lightbox extends React.Component {
-    moving = false;
     initX  = 0;
     initY  = 0;
     lastX  = 0;
@@ -86,8 +85,13 @@ export default class Lightbox extends React.Component {
                 this.setState({zoom: this.state.zoom + zoomStep});
                 break;
             case "out":
-                if(this.state.zoom > 1) this.setState({zoom: this.state.zoom - zoomStep});
-                else this.setState({x:0,y:0});
+                let newZoom = this.state.zoom - zoomStep;
+                if(newZoom < 1) break;
+                else if(newZoom === 1) this.setState({x:0, y:0, zoom: 1});
+                else this.setState({zoom: newZoom});
+                break;
+            case "reset":
+                this.setState({x:0, y:0, zoom: 1});
                 break;
         }
     }
@@ -115,24 +119,40 @@ export default class Lightbox extends React.Component {
         if(clickOutsideToExit) return this.exit(e);
     }
     keyboardNavigation = e => {
+        let {allowZoom = true}  = this.props; 
+        let {multi, x, y, zoom} = this.state;
         switch(e.key){
             case "ArrowLeft":
-                this.navigateImage("prev", e);
+                if(multi && zoom === 1) this.navigateImage("prev", e);
+                else if(zoom > 1) this.setState({x: x - 20});
                 break;
             case "ArrowRight":
-                this.navigateImage("next", e);
+                if(multi && zoom === 1) this.navigateImage("next", e);
+                else if(zoom > 1) this.setState({x: x + 20});
+                break;
+            case "ArrowUp":
+                if(zoom > 1) this.setState({y: y + 20});
+                break;
+            case "ArrowDown":
+                if(zoom > 1) this.setState({y: y - 20});
+                break;
+            case "+":
+                if(allowZoom) this.applyZoom("in");
+                break;
+            case "-":
+                if(allowZoom) this.applyZoom("out");
                 break;
         }
     }
     componentDidMount(){
         document.body.classList.add("lb-open-lightbox");
-        let {keyboardNavigation = true} = this.props;
-        this.state.multi && keyboardNavigation && document.addEventListener("keyup", this.keyboardNavigation);
+        let {keyboardInteraction = true} = this.props;
+        if(keyboardInteraction) document.addEventListener("keyup", this.keyboardNavigation);
     }
     componentWillUnmount(){
         document.body.classList.remove("lb-open-lightbox");
-        let {keyboardNavigation = true} = this.props;
-        this.state.multi && keyboardNavigation && document.removeEventListener("keyup", this.keyboardNavigation);
+        let {keyboardInteraction = true} = this.props;
+        if(keyboardInteraction) document.removeEventListener("keyup", this.keyboardNavigation);
     }
     render(){
         let image = this.getCurrentImage(this.state,this.props);
@@ -168,7 +188,9 @@ export default class Lightbox extends React.Component {
                     </Cond>
                     <Cond condition = {allowZoom}>
                         <div title="Zoom In" className="lb-button lb-icon-zoomin zoomin" onClick={()=>this.applyZoom("in")}></div>
-                        <div title="Zoom Out" className="lb-button lb-icon-zoomout zoomout" onClick={()=>this.applyZoom("out")}></div>
+                        <div title="Zoom Out" 
+                        className={`lb-button lb-icon-zoomout zoomout ${this.state.zoom<=1?"disabled":""}`}
+                        onClick={()=>this.applyZoom("out")}></div>
                     </Cond>
                     <Cond condition = {allowRotate}>
                         <div title="Rotate left" className="lb-button lb-icon-rotate rotatel" onClick={()=>this.applyRotate("acw")}></div>

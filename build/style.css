@@ -131,6 +131,11 @@
 .lb-show-mobile{
     display: none;   
 }
+.disabled{
+    pointer-events: none;
+    touch-action: none;
+    opacity: 0.5;
+}
 @media (max-width:600px){
     .lb-header .lb-button:hover{
         background-color: inherit;
