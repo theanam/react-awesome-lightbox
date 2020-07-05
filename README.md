@@ -75,7 +75,7 @@ Lightbox can be customized with the following properties
 * Arrow keys <kbd>←</kbd> , <kbd>→</kbd>, when zoomed out, will navigate between images in multi image mode.
 * When Zoomed in, <kbd>←</kbd>, <kbd>→</kbd>, <kbd>↑</kbd>, <kbd>↓</kbd> keys will move the image
 * <kbd>+</kbd> and <kbd>-</kbd> will zoom in and out the image is zoom is allowed.
-
+* <kbd>esc</kbd> will trigger the `onClose` function
 ### Styling
 All the styles are in the `build/style.css` file. If you want to modify the CSS, download this file and customize it. then include the custom CSS file instead of the file from the package.
 

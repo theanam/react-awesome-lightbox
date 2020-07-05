@@ -111,7 +111,7 @@ export default class Lightbox extends React.Component {
     };
     exit  = (e) =>{
         if(typeof this.props.onClose === "function") return this.props.onClose(e);
-        console.warn("No Exit function passed on props: onClose");
+        console.error("No Exit function passed on prop: onClose. Clicking the close button will do nothing");
     }
     shouldShowReset = () => (this.state.x || this.state.y || this.state.zoom !== 1 || this.state.rotate !== 0);
     canvasClick = (e) => {
@@ -141,6 +141,9 @@ export default class Lightbox extends React.Component {
                 break;
             case "-":
                 if(allowZoom) this.applyZoom("out");
+                break;
+            case "Escape":
+                this.exit(e);
                 break;
         }
     }
