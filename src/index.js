@@ -109,7 +109,7 @@ export default class Lightbox extends React.Component {
         this.stopSideEffect(e);
         this.setState({x:0,y:0,zoom:1,rotate:0});
     };
-    exit  = (e) =>{
+    exit = (e) =>{
         if(typeof this.props.onClose === "function") return this.props.onClose(e);
         console.error("No Exit function passed on prop: onClose. Clicking the close button will do nothing");
     }
@@ -119,7 +119,7 @@ export default class Lightbox extends React.Component {
         if(clickOutsideToExit) return this.exit(e);
     }
     keyboardNavigation = e => {
-        let {allowZoom = true}  = this.props; 
+        let {allowZoom = true, allowReset = true} = this.props; 
         let {multi, x, y, zoom} = this.state;
         switch(e.key){
             case "ArrowLeft":
@@ -143,7 +143,8 @@ export default class Lightbox extends React.Component {
                 if(allowZoom) this.applyZoom("out");
                 break;
             case "Escape":
-                this.exit(e);
+                if(allowReset && this.shouldShowReset()) this.reset(e);
+                else this.exit(e);
                 break;
         }
     }

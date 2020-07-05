@@ -67,7 +67,7 @@ Lightbox can be customized with the following properties
 |allowReset|true|Determine if reset buttons should be shown|
 |buttonAlign|"flex-end"|Determine how to align the toolbar buttons <br> options are: `flex-end`, `flex-start`, `center`| 
 |showTitle|true|Determines if title should be shown if available|
-|keyboardInteraction|true|Determine if keyboard shortcuts will be allowed <br> with left and right <br> keyboard keys|
+|keyboardInteraction|true|Determine if keyboard shortcuts will be allowed <br> See below section for available <br> Shortcuts|
 
 
 ### Keyboard Shortcut:
@@ -75,7 +75,7 @@ Lightbox can be customized with the following properties
 * Arrow keys <kbd>←</kbd> , <kbd>→</kbd>, when zoomed out, will navigate between images in multi image mode.
 * When Zoomed in, <kbd>←</kbd>, <kbd>→</kbd>, <kbd>↑</kbd>, <kbd>↓</kbd> keys will move the image
 * <kbd>+</kbd> and <kbd>-</kbd> will zoom in and out the image is zoom is allowed.
-* <kbd>esc</kbd> will trigger the `onClose` function
+* <kbd>esc</kbd> will reset transformation (if reset is allowrd), if no transformation is left to reset it will trigger the `onClose` function (close the lightbox).
 ### Styling
 All the styles are in the `build/style.css` file. If you want to modify the CSS, download this file and customize it. then include the custom CSS file instead of the file from the package.
 
