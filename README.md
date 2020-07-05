@@ -83,4 +83,4 @@ All the styles are in the `build/style.css` file. If you want to modify the CSS,
 * Double tap/click to zoom
 * Pinch to Zoom
 
-Released under the MIT license. Contributions are welcome 🖤
+Released under the MIT license. Icons are from [Icofont](https://icofont.com/). Contributions are welcome 🖤
