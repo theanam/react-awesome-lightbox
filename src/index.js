@@ -161,6 +161,10 @@ export default class Lightbox extends React.Component {
     render(){
         let image = this.getCurrentImage(this.state,this.props);
         let title = this.getCurrentTitle(this.state,this.props);
+        if(!image){
+            console.warn("Not showing lightbox because no image(s) was supplied");
+            return null;
+        }
         let {
             allowZoom   = true,
             allowRotate = true,
@@ -168,11 +172,8 @@ export default class Lightbox extends React.Component {
             showTitle   = true,
             allowReset  = true
         } = this.props;
-        let {x,y,zoom,rotate} = this.state;
-        if(!image){
-            console.warn("Not showing lightbox because no image(s) was supplied");
-            return null;
-        }
+        let {x, y, zoom, rotate, multi, loading, moving} = this.state;
+        let _reset = allowReset && this.shouldShowReset();
         return (
             <div className="lb-container">
                 <div className="lb-header" style={{justifyContent: buttonAlign}}>
@@ -180,20 +181,25 @@ export default class Lightbox extends React.Component {
                         <div className="lb-title"
                         style={{
                             display   : buttonAlign === "center"?"none":"flex",
-                            order     : buttonAlign === "flex-start"?"1":"unset"
+                            order     : buttonAlign === "flex-start"?"2":"unset"
                         }}>
                             <span title={title} style= {{textAlign : buttonAlign === "flex-start"?"right":"left"}}>{title}</span>
                         </div>  
                     </Cond>
-                    {(allowReset && this.shouldShowReset())?<div title="Reset" className="lb-button lb-icon-reset lb-hide-mobile reload" onClick={this.reset}></div>:null}
-                    <Cond condition = {this.state.multi}>
+                    <Cond condition={buttonAlign === "center" || _reset}>
+                        <div title="Reset" 
+                        style={{order : buttonAlign === "flex-start"?"1":"unset"}} 
+                        className={`lb-button lb-icon-reset lb-hide-mobile reload ${_reset?"":"disabled"}`}
+                        onClick={this.reset}></div>
+                    </Cond>
+                    <Cond condition = {multi}>
                         <div title="Previous" className="lb-button lb-icon-arrow prev lb-hide-mobile" onClick={e=>this.navigateImage("prev", e)}></div>
                         <div title="Next" className="lb-button lb-icon-arrow next lb-hide-mobile" onClick={e=>this.navigateImage("next", e)}></div>
                     </Cond>
                     <Cond condition = {allowZoom}>
                         <div title="Zoom In" className="lb-button lb-icon-zoomin zoomin" onClick={()=>this.applyZoom("in")}></div>
                         <div title="Zoom Out" 
-                        className={`lb-button lb-icon-zoomout zoomout ${this.state.zoom<=1?"disabled":""}`}
+                        className={`lb-button lb-icon-zoomout zoomout ${zoom<=1?"disabled":""}`}
                         onClick={()=>this.applyZoom("out")}></div>
                     </Cond>
                     <Cond condition = {allowRotate}>
@@ -203,13 +209,13 @@ export default class Lightbox extends React.Component {
                     <div title="Close" className="lb-button lb-icon-close close" style={{order: buttonAlign === "flex-start"?"-1":"unset"}} onClick={e=>this.exit(e)}></div>
                 </div>
                 <div 
-                className={`lb-canvas${this.state.loading?" lb-loading":""}`}
+                className={`lb-canvas${loading?" lb-loading":""}`}
                 onClick={e=>this.canvasClick(e)}>
                     <img draggable = "false"
                     style={{
                         transform  : this.createTransform(x,y,zoom,rotate),
-                        cursor     : this.state.zoom > 1? "grab":"unset",
-                        transition : this.state.moving?"none":"all 0.1s"
+                        cursor     : zoom>1?"grab":"unset",
+                        transition : moving?"none":"all 0.1s"
                     }}
                     onMouseDown={e=>this.startMove(e)}
                     onTouchStart={e=>this.startMove(e)}
@@ -220,16 +226,14 @@ export default class Lightbox extends React.Component {
                     onTouchEnd={e=>this.endMove(e)}
                     onClick={e=>this.stopSideEffect(e)}
                     onLoad={e=>this.setState({loading: false})}
-                    className={`lb-img${this.state.loading?" lb-loading":""}`}
+                    className={`lb-img${loading?" lb-loading":""}`}
                     title={title}
                     src={image} alt={title}/>
-                    <Cond condition={this.state.multi}>
                         <div className="mobile-controls lb-show-mobile">
-                            <div title="Previous" className="lb-button lb-icon-arrow prev" onClick={e=>this.navigateImage("prev", e)}></div>
-                            {(allowReset && this.shouldShowReset())?<div title="Reset" className="lb-button lb-icon-reset reload" onClick={this.reset}></div>:null}
-                            <div title="Next" className="lb-button lb-icon-arrow next" onClick={e=>this.navigateImage("next", e)}></div>
+                        {multi?<div title="Previous" className="lb-button lb-icon-arrow prev" onClick={e=>this.navigateImage("prev", e)}></div>:null}
+                        {_reset?<div title="Reset" className="lb-button lb-icon-reset reload" onClick={this.reset}></div>:null}
+                        {multi?<div title="Next" className="lb-button lb-icon-arrow next" onClick={e=>this.navigateImage("next", e)}></div>:null}
                         </div>
-                    </Cond>
                 </div>
             </div>
         )

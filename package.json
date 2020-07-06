@@ -1,6 +1,6 @@
 {
     "name": "react-awesome-lightbox",
-    "version": "1.5.4",
+    "version": "1.6.0",
     "description": "lightbox image viewer for react with zoom, rotate. Single or multi image mode and touch support",
     "keywords": [
         "react",
@@ -9,7 +9,9 @@
         "image zoom",
         "image rotate",
         "image gallery",
-        "react lightbox"
+        "react lightbox",
+        "responsive lightbox",
+        "reactjs"
     ],
     "main": "build/index.js",
     "peerDependencies": {
