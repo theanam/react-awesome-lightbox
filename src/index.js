@@ -88,7 +88,7 @@ export default class Lightbox extends React.Component {
             // Implement double tap
             if(this._tap) return this.shockZoom(e);
             this._tap = true;
-            setTimeout(e=>this._tap = false, 600); // 600ms tap delay
+            setTimeout(e=>this._tap = false, 500); // 500ms tap delay
         }
         if(this.state.zoom <= 1) return false;
         this.setState({moving: true});
