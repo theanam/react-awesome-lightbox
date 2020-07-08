@@ -1,4 +1,6 @@
 import React from "react";
+const DEFAULT_ZOOM_STEP  = 0.3;
+const DEFAULT_LARGE_ZOOM = 4;
 function getXY(e){
     let x = 0;
     let y = 0;
@@ -21,10 +23,12 @@ function Cond(props){
     );
 }
 export default class Lightbox extends React.Component {
-    initX  = 0;
-    initY  = 0;
-    lastX  = 0;
-    lastY  = 0;
+    initX = 0;
+    initY = 0;
+    lastX = 0;
+    lastY = 0;
+    _tap  = false;
+    _cont = React.createRef();
     state = {
         x       : 0,
         y       : 0,
@@ -45,6 +49,25 @@ export default class Lightbox extends React.Component {
         if(!s.multi) return p.title ?? "";
         return p.images?.[s.current]?.title ?? "";
     }
+    resetZoom = () => this.setState({x:0, y:0, zoom:1});
+    shockZoom = e =>{
+        let {
+            zoomStep        = DEFAULT_ZOOM_STEP, 
+            allowZoom       = true, 
+            doubleClickZoom = DEFAULT_LARGE_ZOOM
+        } = this.props;
+        if(!allowZoom || !doubleClickZoom) return false;
+        this.stopSideEffect(e);
+        if(this.state.zoom > 1) return this.resetZoom();
+        const _z   = ((zoomStep<1)?Math.ceil(doubleClickZoom / zoomStep):zoomStep) * zoomStep;
+        const _xy  = getXY(e);
+        const _cbr = this._cont.current?.getBoundingClientRect?.();
+        const _ccx = _cbr.x + (_cbr.width / 2);
+        const _ccy = _cbr.y + (_cbr.height / 2);
+        const x    = (_xy.x - _ccx) * -1 * _z;
+        const y    = (_xy.y - _ccy) * -1 * _z;
+        this.setState({x, y, zoom: _z});
+    }
     navigateImage = (direction, e) =>{
         this.stopSideEffect(e);
         let current = 0;
@@ -61,6 +84,12 @@ export default class Lightbox extends React.Component {
         this.setState({current, x: 0, y: 0, zoom: 1, rotate: 0, loading: true});
     }
     startMove = (e) => {
+        if(e.touches){
+            // Implement double tap
+            if(this._tap) return this.shockZoom(e);
+            this._tap = true;
+            setTimeout(e=>this._tap = false, 600); // 600ms tap delay
+        }
         if(this.state.zoom <= 1) return false;
         this.setState({moving: true});
         let xy = getXY(e);
@@ -77,9 +106,9 @@ export default class Lightbox extends React.Component {
             y: xy.y - this.initY
         });
     }
-    endMove = (e) => this.setState({moving: false});
+    endMove   = (e) => this.setState({moving: false});
     applyZoom = (type) => {
-        let {zoomStep = 0.3} = this.props;
+        let {zoomStep = DEFAULT_ZOOM_STEP} = this.props;
         switch(type){
             case "in":
                 this.setState({zoom: this.state.zoom + zoomStep});
@@ -91,7 +120,7 @@ export default class Lightbox extends React.Component {
                 else this.setState({zoom: newZoom});
                 break;
             case "reset":
-                this.setState({x:0, y:0, zoom: 1});
+                this.resetZoom();
                 break;
         }
     }
@@ -116,7 +145,7 @@ export default class Lightbox extends React.Component {
     shouldShowReset = () => (this.state.x || this.state.y || this.state.zoom !== 1 || this.state.rotate !== 0);
     canvasClick = (e) => {
         let {clickOutsideToExit = true} = this.props;
-        if(clickOutsideToExit) return this.exit(e);
+        if(clickOutsideToExit && this.state.zoom <=1) return this.exit(e);
     }
     keyboardNavigation = e => {
         let {allowZoom = true, allowReset = true} = this.props; 
@@ -210,8 +239,10 @@ export default class Lightbox extends React.Component {
                 </div>
                 <div 
                 className={`lb-canvas${loading?" lb-loading":""}`}
+                ref={this._cont}
                 onClick={e=>this.canvasClick(e)}>
-                    <img draggable = "false"
+                    <img
+                    draggable = "false"
                     style={{
                         transform  : this.createTransform(x,y,zoom,rotate),
                         cursor     : zoom>1?"grab":"unset",
@@ -225,6 +256,7 @@ export default class Lightbox extends React.Component {
                     onMouseLeave={e=>this.endMove(e)}
                     onTouchEnd={e=>this.endMove(e)}
                     onClick={e=>this.stopSideEffect(e)}
+                    onDoubleClick={e=>this.shockZoom(e)}
                     onLoad={e=>this.setState({loading: false})}
                     className={`lb-img${loading?" lb-loading":""}`}
                     title={title}

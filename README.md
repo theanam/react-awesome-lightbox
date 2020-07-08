@@ -68,6 +68,7 @@ Lightbox can be customized with the following properties
 |buttonAlign|"flex-end"|Determine how to align the toolbar buttons <br> options are: `flex-end`, `flex-start`, `center`| 
 |showTitle|true|Determines if title should be shown if available|
 |keyboardInteraction|true|Determine if keyboard shortcuts will be allowed <br> See below section for available <br> Shortcuts|
+|doubleClickZoom|4|Determine how much to zoom in if double clicked.<br> default 4 means close to 400%.<br> Setting it to 0 will disable <br> doubleclick/ double tap zoom|
 
 
 ### Keyboard Shortcut:
@@ -80,7 +81,6 @@ Lightbox can be customized with the following properties
 All the styles are in the `build/style.css` file. If you want to modify the CSS, download this file and customize it. then include the custom CSS file instead of the file from the package.
 
 ### Todo: 
-* Double tap/click to zoom
 * Pinch to Zoom
 
 Released under the MIT license. Icons are from [Icofont](https://icofont.com/). Contributions are welcome 🖤
