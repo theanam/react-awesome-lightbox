@@ -27,7 +27,6 @@ export default class Lightbox extends React.Component {
     initY = 0;
     lastX = 0;
     lastY = 0;
-    _tap  = false;
     _cont = React.createRef();
     state = {
         x       : 0,
@@ -84,12 +83,6 @@ export default class Lightbox extends React.Component {
         this.setState({current, x: 0, y: 0, zoom: 1, rotate: 0, loading: true});
     }
     startMove = (e) => {
-        if(e.touches){
-            // Implement double tap
-            if(this._tap) return this.shockZoom(e);
-            this._tap = true;
-            setTimeout(e=>this._tap = false, 500); // 500ms tap delay
-        }
         if(this.state.zoom <= 1) return false;
         this.setState({moving: true});
         let xy = getXY(e);
