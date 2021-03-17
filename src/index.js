@@ -211,7 +211,7 @@ export default class Lightbox extends React.Component {
                     <Cond condition={buttonAlign === "center" || _reset}>
                         <div title="Reset" 
                         style={{order : buttonAlign === "flex-start"?"1":"unset"}} 
-                        className={`lb-button lb-icon-reset lb-hide-mobile reload ${_reset?"":"disabled"}`}
+                        className={`lb-button lb-icon-reset lb-hide-mobile reload ${_reset?"":"lb-disabled"}`}
                         onClick={this.reset}></div>
                     </Cond>
                     <Cond condition = {multi}>
@@ -221,7 +221,7 @@ export default class Lightbox extends React.Component {
                     <Cond condition = {allowZoom}>
                         <div title="Zoom In" className="lb-button lb-icon-zoomin zoomin" onClick={()=>this.applyZoom("in")}></div>
                         <div title="Zoom Out" 
-                        className={`lb-button lb-icon-zoomout zoomout ${zoom<=1?"disabled":""}`}
+                        className={`lb-button lb-icon-zoomout zoomout ${zoom<=1?"lb-disabled":""}`}
                         onClick={()=>this.applyZoom("out")}></div>
                     </Cond>
                     <Cond condition = {allowRotate}>
