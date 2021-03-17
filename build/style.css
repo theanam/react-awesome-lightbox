@@ -131,7 +131,7 @@
 .lb-show-mobile{
     display: none;   
 }
-.disabled{
+.lb-disabled{
     pointer-events: none;
     touch-action: none;
     opacity: 0.4;
