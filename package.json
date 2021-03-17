@@ -15,7 +15,7 @@
     ],
     "main": "build/index.js",
     "peerDependencies": {
-        "react": "^16"
+        "react": "^16||^17"
     },
     "scripts": {
         "start": "webpack --watch",
