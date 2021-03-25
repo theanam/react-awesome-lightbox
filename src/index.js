@@ -36,17 +36,17 @@ export default class Lightbox extends React.Component {
         loading : true,
         moving  : false,
         current : this.props?.startIndex ?? 0,
-        multi   : this.props?.images?.length? true: false
+        multi   : this.props?.data?.length? true: false
     }
     createTransform = (x,y,zoom,rotate) => `translate3d(${x}px,${y}px,0px) scale(${zoom}) rotate(${rotate}deg)`;
     stopSideEffect  = (e) => e.stopPropagation();
-    getCurrentImage = (s,p) => {
-        if(!s.multi) return p.image ?? "";
-        return p.images[s.current]?.url ?? p.images?.[s.current] ?? "";
+    getCurrentItem = (s,p) => {
+        if(!s.multi) return p.item ?? "";
+        return p.data[s.current]?.url ?? p.data?.[s.current] ?? "";
     }
     getCurrentTitle = (s,p)  => {
         if(!s.multi) return p.title ?? "";
-        return p.images?.[s.current]?.title ?? "";
+        return p.data?.[s.current]?.title ?? "";
     }
     resetZoom = () => this.setState({x:0, y:0, zoom:1});
     shockZoom = e =>{
@@ -67,7 +67,7 @@ export default class Lightbox extends React.Component {
         const y    = (_xy.y - _ccy) * -1 * _z;
         this.setState({x, y, zoom: _z});
     }
-    navigateImage = (direction, e) =>{
+    navigateItem = (direction, e) =>{
         this.stopSideEffect(e);
         let current = 0;
         switch(direction){
@@ -78,8 +78,8 @@ export default class Lightbox extends React.Component {
                 current = this.state.current - 1;
                 break;
         }
-        if(current >= this.props.images.length) current = 0;
-        else if (current < 0) current = this.props.images.length -1;
+        if(current >= this.props.data.length) current = 0;
+        else if (current < 0) current = this.props.data.length -1;
         this.setState({current, x: 0, y: 0, zoom: 1, rotate: 0, loading: true});
     }
     startMove = (e) => {
@@ -145,11 +145,11 @@ export default class Lightbox extends React.Component {
         let {multi, x, y, zoom} = this.state;
         switch(e.key){
             case "ArrowLeft":
-                if(multi && zoom === 1) this.navigateImage("prev", e);
+                if(multi && zoom === 1) this.navigateItem("prev", e);
                 else if(zoom > 1) this.setState({x: x - 20});
                 break;
             case "ArrowRight":
-                if(multi && zoom === 1) this.navigateImage("next", e);
+                if(multi && zoom === 1) this.navigateItem("next", e);
                 else if(zoom > 1) this.setState({x: x + 20});
                 break;
             case "ArrowUp":
@@ -181,10 +181,10 @@ export default class Lightbox extends React.Component {
         if(keyboardInteraction) document.removeEventListener("keyup", this.keyboardNavigation);
     }
     render(){
-        let image = this.getCurrentImage(this.state,this.props);
+        let item = this.getCurrentItem(this.state,this.props);
         let title = this.getCurrentTitle(this.state,this.props);
-        if(!image){
-            console.warn("Not showing lightbox because no image(s) was supplied");
+        if(!item){
+            console.warn("Not showing lightbox because no item or data was supplied");
             return null;
         }
         let {
@@ -192,10 +192,47 @@ export default class Lightbox extends React.Component {
             allowRotate = true,
             buttonAlign = "flex-end",
             showTitle   = true,
-            allowReset  = true
+            allowReset  = true,
+            iframe
         } = this.props;
         let {x, y, zoom, rotate, multi, loading, moving} = this.state;
         let _reset = allowReset && this.shouldShowReset();
+        let commonProps = {
+            draggable: "false",
+            style: {
+                transform  : this.createTransform(x,y,zoom,rotate),
+                cursor     : zoom>1?"grab":"unset",
+                transition : moving?"none":"all 0.1s"
+            },
+            onMouseDown: e=>this.startMove(e),
+            onTouchStart: e=>this.startMove(e),
+            onMouseMove: e=>this.duringMove(e),
+            onTouchMove: e=>this.duringMove(e),
+            onMouseUp: e=>this.endMove(e),
+            onMouseLeave: e=>this.endMove(e),
+            onTouchEnd: e=>this.endMove(e),
+            onClick: e=>this.stopSideEffect(e),
+            onDoubleClick: e=>this.shockZoom(e),
+            onLoad: e=>this.setState({loading: false}),
+            className: `lb-img${loading?" lb-loading":""}`,
+            title,
+            src: item,
+            alt: title,
+        }
+        
+        let val = iframe
+            ? (
+                <iframe
+                {...commonProps}
+                allowFullScreen
+                width='720px' height='405px'
+                />
+            )
+            : (
+                <img
+                {...commonProps}
+                />
+            )
         return (
             <div className="lb-container">
                 <div className="lb-header" style={{justifyContent: buttonAlign}}>
@@ -215,8 +252,8 @@ export default class Lightbox extends React.Component {
                         onClick={this.reset}></div>
                     </Cond>
                     <Cond condition = {multi}>
-                        <div title="Previous" className="lb-button lb-icon-arrow prev lb-hide-mobile" onClick={e=>this.navigateImage("prev", e)}></div>
-                        <div title="Next" className="lb-button lb-icon-arrow next lb-hide-mobile" onClick={e=>this.navigateImage("next", e)}></div>
+                        <div title="Previous" className="lb-button lb-icon-arrow prev lb-hide-mobile" onClick={e=>this.navigateItem("prev", e)}></div>
+                        <div title="Next" className="lb-button lb-icon-arrow next lb-hide-mobile" onClick={e=>this.navigateItem("next", e)}></div>
                     </Cond>
                     <Cond condition = {allowZoom}>
                         <div title="Zoom In" className="lb-button lb-icon-zoomin zoomin" onClick={()=>this.applyZoom("in")}></div>
@@ -234,30 +271,11 @@ export default class Lightbox extends React.Component {
                 className={`lb-canvas${loading?" lb-loading":""}`}
                 ref={this._cont}
                 onClick={e=>this.canvasClick(e)}>
-                    <img
-                    draggable = "false"
-                    style={{
-                        transform  : this.createTransform(x,y,zoom,rotate),
-                        cursor     : zoom>1?"grab":"unset",
-                        transition : moving?"none":"all 0.1s"
-                    }}
-                    onMouseDown={e=>this.startMove(e)}
-                    onTouchStart={e=>this.startMove(e)}
-                    onMouseMove={e=>this.duringMove(e)}
-                    onTouchMove={e=>this.duringMove(e)}
-                    onMouseUp={e=>this.endMove(e)}
-                    onMouseLeave={e=>this.endMove(e)}
-                    onTouchEnd={e=>this.endMove(e)}
-                    onClick={e=>this.stopSideEffect(e)}
-                    onDoubleClick={e=>this.shockZoom(e)}
-                    onLoad={e=>this.setState({loading: false})}
-                    className={`lb-img${loading?" lb-loading":""}`}
-                    title={title}
-                    src={image} alt={title}/>
+                        {val}
                         <div className="mobile-controls lb-show-mobile">
-                        {multi?<div title="Previous" className="lb-button lb-icon-arrow prev" onClick={e=>this.navigateImage("prev", e)}></div>:null}
+                        {multi?<div title="Previous" className="lb-button lb-icon-arrow prev" onClick={e=>this.navigateItem("prev", e)}></div>:null}
                         {_reset?<div title="Reset" className="lb-button lb-icon-reset reload" onClick={this.reset}></div>:null}
-                        {multi?<div title="Next" className="lb-button lb-icon-arrow next" onClick={e=>this.navigateImage("next", e)}></div>:null}
+                        {multi?<div title="Next" className="lb-button lb-icon-arrow next" onClick={e=>this.navigateItem("next", e)}></div>:null}
                         </div>
                 </div>
             </div>
