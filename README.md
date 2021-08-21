@@ -69,6 +69,7 @@ Lightbox can be customized with the following properties
 |showTitle|true|Determines if title should be shown if available|
 |keyboardInteraction|true|Determine if keyboard shortcuts will be allowed <br> See below section for available <br> Shortcuts|
 |doubleClickZoom|4|Determine how much to zoom in if double clicked.<br> default 4 means close to 400%.<br> Setting it to 0 will disable <br> doubleclick/ double tap zoom|
+|onNavigateImage|null|Callback when image is navigated. It accepts the<br/>new index as its parameter.|
 
 
 ### Keyboard Shortcut:

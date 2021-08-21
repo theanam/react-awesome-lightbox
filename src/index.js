@@ -81,6 +81,9 @@ export default class Lightbox extends React.Component {
         if(current >= this.props.images.length) current = 0;
         else if (current < 0) current = this.props.images.length -1;
         this.setState({current, x: 0, y: 0, zoom: 1, rotate: 0, loading: true});
+        if(typeof this.props.onNavigateImage === 'function') {
+            this.props.onNavigateImage(current)
+        }
     }
     startMove = (e) => {
         if(this.state.zoom <= 1) return false;
