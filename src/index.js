@@ -48,7 +48,11 @@ export default class Lightbox extends React.Component {
         if(!s.multi) return p.title ?? "";
         return p.images?.[s.current]?.title ?? "";
     }
-    resetZoom = () => this.setState({x:0, y:0, zoom:1});
+    resetZoom = () =>{
+        this.setState({x:0, y:0, zoom:1});
+        this.lastX = 0;
+        this.lastY = 0;
+    }
     shockZoom = e =>{
         let {
             zoomStep        = DEFAULT_ZOOM_STEP, 
@@ -81,6 +85,8 @@ export default class Lightbox extends React.Component {
         if(current >= this.props.images.length) current = 0;
         else if (current < 0) current = this.props.images.length -1;
         this.setState({current, x: 0, y: 0, zoom: 1, rotate: 0, loading: true});
+        this.lastX = 0;
+        this.lastY = 0;
         if(typeof this.props.onNavigateImage === 'function') {
             this.props.onNavigateImage(current)
         }
@@ -133,6 +139,8 @@ export default class Lightbox extends React.Component {
     reset = e => {
         this.stopSideEffect(e);
         this.setState({x:0,y:0,zoom:1,rotate:0});
+        this.lastX = 0;
+        this.lastY = 0;
     };
     exit = (e) =>{
         if(typeof this.props.onClose === "function") return this.props.onClose(e);
