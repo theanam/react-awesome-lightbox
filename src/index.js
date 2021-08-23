@@ -139,6 +139,8 @@ export default class Lightbox extends React.Component {
     reset = e => {
         this.stopSideEffect(e);
         this.setState({x:0,y:0,zoom:1,rotate:0});
+        this.lastX = 0;
+        this.lastY = 0;
     };
     exit = (e) =>{
         if(typeof this.props.onClose === "function") return this.props.onClose(e);
