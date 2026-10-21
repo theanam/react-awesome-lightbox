@@ -34,7 +34,7 @@ import "react-awesome-lightbox/build/style.css";
 #### Then use it like this for single image:
 
 ```jsx
-<Lightbox image="image_url" title="Image Title">
+<Lightbox image="image_url" title="Image Title" />
 ```
 #### or for multiple images: 
 
@@ -49,7 +49,7 @@ let images = [
         title:"image title 2"
     }
 ]
-<Lightbox images={images}>
+<Lightbox images={images} />
 ```
 ### Available properties
 Lightbox can be customized with the following properties
