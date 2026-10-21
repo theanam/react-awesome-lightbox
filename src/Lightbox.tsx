@@ -525,7 +525,8 @@ export function Lightbox(props: LightboxProps) {
     };
     canvas.addEventListener("wheel", onWheel, { passive: false });
     return () => canvas.removeEventListener("wheel", onWheel);
-  }, [allowZoom, commit, toCanvasPoint, wheelZoom, zoomStep]);
+    // `mounted` is a dependency because the canvas only exists once the portal has mounted.
+  }, [allowZoom, commit, mounted, toCanvasPoint, wheelZoom, zoomStep]);
 
   /* ----- image loading ----- */
 
@@ -579,7 +580,7 @@ export function Lightbox(props: LightboxProps) {
     const observer = new ResizeObserver(measure);
     observer.observe(canvas);
     return () => observer.disconnect();
-  }, [measure]);
+  }, [measure, mounted]);
 
   /* ----- pointer gestures: pan, pinch, swipe, double tap ----- */
 

@@ -234,6 +234,14 @@ describe("zoom, rotate, reset", () => {
     expect(transformOf()).toContain("scale(3)");
   });
 
+  it("zooms with the mouse wheel around the cursor (through the portal)", () => {
+    render(<Lightbox image="https://example.com/a.jpg" zoomStep={1} />);
+    fireEvent.wheel(canvas(), { deltaY: -100, clientX: 500, clientY: 400 });
+    expect(transformOf()).toContain("scale(2)");
+    fireEvent.wheel(canvas(), { deltaY: 100, clientX: 500, clientY: 400 });
+    expect(transformOf()).toContain("scale(1)");
+  });
+
   it("scales a rotated wide image down to fit (#11)", () => {
     // image layout size is 600x400 (setup), canvas 1000x800: rotated 90deg its 600px width must fit 800px height
     Object.defineProperty(HTMLElement.prototype, "offsetWidth", { configurable: true, get: () => 1200 });
