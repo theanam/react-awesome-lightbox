@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "jsx": "react-jsx",
     "module": "ESNext",
     "moduleResolution": "Bundler",
@@ -12,7 +16,27 @@
     "isolatedModules": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "types": ["node", "vitest/globals", "@testing-library/jest-dom"]
+    "types": [
+      "node",
+      "vitest/globals",
+      "@testing-library/jest-dom"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "react-awesome-lightbox": [
+        "./src/index.ts"
+      ],
+      "react-awesome-lightbox/style.css": [
+        "./src/style.css"
+      ]
+    }
   },
-  "include": ["src", "test", "demo/src", "tsup.config.ts", "vitest.config.ts", "demo/vite.config.ts"]
+  "include": [
+    "src",
+    "test",
+    "demo/src",
+    "tsup.config.ts",
+    "vitest.config.ts",
+    "demo/vite.config.ts"
+  ]
 }
