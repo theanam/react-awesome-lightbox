@@ -28,6 +28,7 @@ export default class Lightbox extends React.Component {
     lastX = 0;
     lastY = 0;
     _cont = React.createRef();
+    _img  = React.createRef();
     state = {
         x       : 0,
         y       : 0,
@@ -185,6 +186,18 @@ export default class Lightbox extends React.Component {
         document.body.classList.add("lb-open-lightbox");
         let {keyboardInteraction = true} = this.props;
         if(keyboardInteraction) document.addEventListener("keyup", this.keyboardNavigation);
+        this.clearLoadingIfComplete();
+    }
+    // onLoad does not fire for cached images or when the URL is unchanged
+    // (duplicate entries / single-entry arrays), which left the spinner stuck (#8)
+    clearLoadingIfComplete = () => {
+        const img = this._img.current;
+        if(this.state.loading && img && img.complete && img.naturalWidth > 0){
+            this.setState({loading: false});
+        }
+    }
+    componentDidUpdate(){
+        this.clearLoadingIfComplete();
     }
     componentWillUnmount(){
         document.body.classList.remove("lb-open-lightbox");
@@ -246,6 +259,7 @@ export default class Lightbox extends React.Component {
                 ref={this._cont}
                 onClick={e=>this.canvasClick(e)}>
                     <img
+                    ref={this._img}
                     draggable = "false"
                     style={{
                         transform  : this.createTransform(x,y,zoom,rotate),
@@ -262,6 +276,7 @@ export default class Lightbox extends React.Component {
                     onClick={e=>this.stopSideEffect(e)}
                     onDoubleClick={e=>this.shockZoom(e)}
                     onLoad={e=>this.setState({loading: false})}
+                    onError={e=>this.setState({loading: false})}
                     className={`lb-img${loading?" lb-loading":""}`}
                     title={title}
                     src={image} alt={title}/>

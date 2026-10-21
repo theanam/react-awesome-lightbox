@@ -81,6 +81,15 @@ Lightbox can be customized with the following properties
 ### Styling
 All the styles are in the `build/style.css` file. If you want to modify the CSS, download this file and customize it. then include the custom CSS file instead of the file from the package.
 
+### Changelog
+#### 1.9.0
+* Supports React 18 and 19 (peer dependency widened to `^16.8||^17||^18||^19`) — #18, #21, #23
+* Published bundle rebuilt; it now actually includes `onNavigateImage` — #16
+* Fixed loading spinner getting stuck on cached or duplicate images — #8
+* Fixed image jumping when dragging after a reset or navigating to another image — #12 (thanks @mathieu-nomadeec)
+* Fixed image getting text-selected on quick clicks in Firefox — #10
+* Build tooling moved to webpack 5; CI publishes only when the version is new
+
 ### Todo: 
 * Pinch to Zoom
 
