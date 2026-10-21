@@ -1,0 +1,29 @@
+name: Deploy demo
+
+on:
+  push:
+    branches: [master]
+    paths: ["demo/**", "src/**", "package.json", ".github/workflows/deploy-demo.yml"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run demo:build
+        env:
+          DEMO_BASE: /react-awesome-lightbox/
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./demo/dist
+          publish_branch: gh-pages
+          force_orphan: true
