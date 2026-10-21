@@ -1,0 +1,61 @@
+:root {
+  color-scheme: light dark;
+  --bg: #0f1115;
+  --fg: #e8e8ea;
+  --muted: #9a9aa3;
+  --card: #181b22;
+  --accent: #7cc4ff;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg: #fafafa; --fg: #16181d; --muted: #5f6370; --card: #fff; --accent: #0b6bcb; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); line-height: 1.5; }
+.page { max-width: 1040px; margin: 0 auto; padding: 32px 16px 80px; }
+.hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0 0 8px; }
+.hero p { color: var(--muted); max-width: 60ch; }
+.links { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.links a { color: var(--accent); }
+.links code, pre { background: var(--card); border-radius: 8px; padding: 4px 8px; font-size: 0.9em; }
+section { margin-top: 40px; }
+h2 { font-size: 1.2rem; margin: 0 0 8px; }
+.hint { color: var(--muted); margin-top: 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.thumb {
+  all: unset; cursor: pointer; display: block; position: relative; border-radius: 10px; overflow: hidden;
+  background: var(--card); aspect-ratio: 3 / 2; outline-offset: 2px;
+}
+.thumb:focus-visible { outline: 2px solid var(--accent); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 200ms ease; }
+.thumb:hover img { transform: scale(1.04); }
+.thumb span {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 8px 10px; font-size: 0.85rem; color: #fff;
+  background: linear-gradient(transparent, rgb(0 0 0 / 0.7));
+}
+.button {
+  background: var(--accent); color: #000; border: 0; border-radius: 8px; padding: 10px 16px; font: inherit; cursor: pointer;
+}
+.option-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px 16px; margin-bottom: 16px; }
+.option-grid label { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.95rem; }
+.option-grid input[type="number"], .option-grid select { font: inherit; padding: 4px 6px; width: 120px; }
+pre { padding: 16px; overflow: auto; }
+
+/* Theme overrides, applied through the `className` prop. */
+.theme-light {
+  --lb-backdrop: rgb(255 255 255 / 0.92);
+  --lb-toolbar-bg: rgb(255 255 255 / 0.85);
+  --lb-fg: #16181d;
+  --lb-fg-muted: #5f6370;
+  --lb-button-hover: rgb(0 0 0 / 0.08);
+  --lb-button-active: rgb(0 0 0 / 0.16);
+  --lb-accent: #0b6bcb;
+}
+.theme-light .lb-nav, .theme-light .lb-mobile-controls .lb-button { background: rgb(0 0 0 / 0.08); color: #16181d; }
+.theme-amber {
+  --lb-backdrop: rgb(28 20 8 / 0.94);
+  --lb-toolbar-bg: rgb(60 40 10 / 0.7);
+  --lb-fg: #ffe9b8;
+  --lb-accent: #f0b429;
+  --lb-button-hover: rgb(240 180 41 / 0.2);
+}
