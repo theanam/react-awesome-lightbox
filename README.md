@@ -8,7 +8,7 @@ Lightbox image image viewer for react with zoom, rotate and move feature with si
 ## Features
 
 * Fully Responsive
-* Smooth tranformation
+* Smooth transformation
 * Single Image Mode
 * Multiple Image Mode
 * Virtually unlimited zoom steps and move Support
@@ -58,7 +58,7 @@ Lightbox can be customized with the following properties
 |----------|---------|-------------|
 |image|n/a|URL to the image to show<br> while in single image mode|
 |title|n/a|Title to show with the single image|
-|images|null| Takes an `array` of inage <br> and starts the lightbox <br> in multi image mode. *If you supply both `image` and <br>`images` prop, `image` is ignored. <br> supported formats : `["url1","url2"...]` <br> or<br> `[{url"url",title:"title"}...]`|
+|images|null| Takes an `array` of image <br> and starts the lightbox <br> in multi image mode. *If you supply both `image` and <br>`images` prop, `image` is ignored. <br> supported formats : `["url1","url2"...]` <br> or<br> `[{url:"url",title:"title"}...]`|
 |startIndex|0|If the lightbox is in multiple image mode,<br> the starting image index|
 |zoomStep|0.3|Step for zoom in or zoom out,<br> 1 means 100% so, default 0.3 means 30%|
 |onClose|null|This function determines how to<br> react when the close button is pressed|
@@ -77,7 +77,7 @@ Lightbox can be customized with the following properties
 * Arrow keys <kbd>←</kbd> , <kbd>→</kbd>, when zoomed out, will navigate between images in multi image mode.
 * When Zoomed in, <kbd>←</kbd>, <kbd>→</kbd>, <kbd>↑</kbd>, <kbd>↓</kbd> keys will move the image
 * <kbd>+</kbd> and <kbd>-</kbd> will zoom in and out the image is zoom is allowed.
-* <kbd>esc</kbd> will reset transformation (if reset is allowrd), if no transformation is left to reset it will trigger the `onClose` function (close the lightbox).
+* <kbd>esc</kbd> will reset transformation (if reset is allowed), if no transformation is left to reset it will trigger the `onClose` function (close the lightbox).
 ### Styling
 All the styles are in the `build/style.css` file. If you want to modify the CSS, download this file and customize it. then include the custom CSS file instead of the file from the package.
 
